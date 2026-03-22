@@ -1,0 +1,113 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="CONTACT">
+    <div class="contact">
+        <h1>CONTACT</h1>
+
+        <div class="eintrag">
+            <span class="label">E-Mail</span>
+            <div class="mail-row">
+                <span id="email">r.alite@posteo.de</span>
+                <button id="copy">Copy</button>
+            </div>
+        </div>
+
+        <div class="eintrag">
+            <span class="label">LinkedIn</span>
+            <a
+                href="https://www.linkedin.com/in/rey-alite-445669179/"
+                target="_blank">Rey Alite</a
+            >
+        </div>
+
+        <div class="eintrag">
+            <span class="label">Location</span>
+            <span>Berlin, Germany</span>
+        </div>
+    </div>
+</BaseLayout>
+
+<style>
+    .contact {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    h1 {
+        margin-bottom: 1rem;
+    }
+
+    div a {
+        text-decoration: underline;
+        width: fit-content;
+    }
+
+    div a:hover {
+        color: var(--gruen-hell);
+    }
+
+    .eintrag {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 1.5rem;
+        align-items: center;
+    }
+
+    .label {
+        font-size: 0.8rem;
+        color: var(--anthrazit-mid);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .mail-row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    button {
+        background: none;
+        border: 0.5px solid var(--anthrazit);
+        color: var(--anthrazit);
+        font-family: "Funnel Sans", sans-serif;
+        font-size: 0.8rem;
+        padding: 0.2rem 0.6rem;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        transition: background-color 0.15s;
+    }
+
+    button:hover {
+        background-color: var(--hell);
+    }
+
+    @media (max-width: 600px) {
+        .eintrag {
+            grid-template-columns: 1fr;
+            gap: 0.25rem;
+        }
+    }
+</style>
+
+<script>
+    function initCopy() {
+        const email = document.getElementById("email");
+        const copy = document.getElementById("copy");
+
+        copy?.addEventListener("click", () => {
+            navigator.clipboard.writeText(email?.textContent ?? "");
+            if (copy) copy.textContent = "Copied!";
+            setTimeout(() => {
+                if (copy) copy.textContent = "Copy";
+            }, 2000);
+        });
+    }
+
+    initCopy();
+    document.addEventListener("astro:page-load", initCopy);
+</script>

@@ -1,0 +1,162 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="CV">
+    <div class="cv">
+        <section class="header">
+            <p class="bio">
+                Hey! I'm Rey, an interface designer with a background in
+                media informatics. I enjoy creating digital experiences that
+                feel familiar and clear. Understanding users is just as
+                important to me as a considered approach to visual rules.
+                Working with people comes naturally. Whether in a team, with
+                clients, or users.
+            </p>
+        </section>
+
+        <section>
+            <h2>Berufserfahrung</h2>
+            <div class="eintraege">
+                <div class="eintrag">
+                    <div class="meta">
+                        <span class="zeitraum">2025</span>
+                    </div>
+                    <div class="inhalt">
+                        <h3>Freelance Webdevelopment & Design</h3>
+                        <span class="unternehmen">Freelance, Berlin</span>
+                    </div>
+                </div>
+                <div class="eintrag">
+                    <div class="meta">
+                        <span class="zeitraum">2024</span>
+                    </div>
+                    <div class="inhalt">
+                        <h3>Working-Student Learning Coach & Marketing</h3>
+                        <span class="unternehmen"
+                            >TUMO Deutschland gGmbH, Berlin</span
+                        >
+                    </div>
+                </div>
+                <div class="eintrag">
+                    <div class="meta">
+                        <span class="zeitraum">2020 — 2024</span>
+                    </div>
+                    <div class="inhalt">
+                        <h3>Working-Student Webdevelopment</h3>
+                        <span class="unternehmen"
+                            >Axel Springer National Media & Tech, Berlin</span
+                        >
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Ausbildung</h2>
+            <div class="eintraege">
+                <div class="eintrag">
+                    <div class="meta">
+                        <span class="zeitraum">October 2022</span>
+                    </div>
+                    <div class="inhalt">
+                        <h3>Interfacedesign (B.A.)</h3>
+                        <span class="unternehmen"
+                            >Fachhochschule Potsdam, Potsdam</span
+                        >
+                    </div>
+                </div>
+                <div class="eintrag">
+                    <div class="meta">
+                        <span class="zeitraum">2017 — 2021</span>
+                    </div>
+                    <div class="inhalt">
+                        <h3>International Media and Computing (B.Sc.)</h3>
+                        <span class="unternehmen"
+                            >Hochschule für Technik und Wirtschaft, Berlin</span
+                        >
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <style>
+        .cv {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .header h1 {
+            margin-bottom: 0.75rem;
+        }
+
+        .bio {
+            line-height: 1.6;
+            color: var(--anthrazit);
+        }
+
+        section h2 {
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--anthrazit);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 0.5px solid var(--anthrazit);
+        }
+
+        .eintraege {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .eintrag {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 1.5rem;
+        }
+
+        .zeitraum {
+            font-size: 0.8rem;
+            color: var(--anthrazit-mid);
+            padding-top: 0.2rem;
+        }
+
+        .inhalt h3 {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .unternehmen {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--anthrazit-mid);
+        }
+
+        .inhalt p {
+            line-height: 1.6;
+            color: var(--anthrazit-mid);
+        }
+
+        @media (max-width: 500px) {
+            .cv {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .eintrag {
+                grid-template-columns: 1fr;
+                gap: 0.25rem;
+            }
+
+            .zeitraum {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</BaseLayout>

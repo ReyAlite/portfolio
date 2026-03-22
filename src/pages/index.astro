@@ -1,17 +1,123 @@
 ---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
+const projekte = await getCollection("projekte");
+const sortiert = projekte.sort((a, b) =>
+  b.data.datum.localeCompare(a.data.datum),
+);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Projects">
+  <h1>PROJECTS</h1>
+
+  <table>
+    <tbody>
+      {
+        sortiert.map((p) => (
+          <tr>
+            <td class="titel">
+              <a href={`/projekte/${p.id}`} class="row-link">
+                <h3>{p.data.title}</h3>
+                <span class="teaser">{p.data.beschreibung}</span>
+              </a>
+            </td>
+            <td class="tags">
+              {p.data.tags?.map((tag) => (
+                <span class="badge">{tag}</span>
+              ))}
+            </td>
+            <td class="datum">{p.data.datum}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</BaseLayout>
+
+<style>
+  h1 {
+    margin-bottom: 3rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  tr:hover {
+    background-color: var(--hell);
+  }
+
+  td {
+    padding: 1rem 0;
+    vertical-align: middle;
+  }
+  tr {
+    cursor: pointer;
+    transition: background-color 0.15s;
+  }
+
+  td.titel {
+    width: 50%;
+  }
+
+  td.tags {
+    width: 35%;
+    text-align: right;
+  }
+
+  td.datum {
+    width: 15%;
+    text-align: right;
+    color: var(--anthrazit-mid);
+  }
+
+  td.titel a {
+    color: var(--anthrazit);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  @media (max-width: 500px) {
+    h1 {
+      margin-bottom: 1.5rem;
+    }
+
+    table,
+    tbody,
+    tr,
+    td {
+      display: block;
+      width: 100%;
+    }
+
+    tr {
+      position: relative;
+      margin-bottom: 1em;
+    }
+
+    td {
+      padding: 0;
+    }
+
+    td.titel {
+      width: 100%;
+      padding-right: 5rem;
+    }
+
+    td.tags {
+      width: 100%;
+      text-align: left;
+    }
+
+    td.datum {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: auto;
+      text-align: right;
+    }
+  }
+</style>

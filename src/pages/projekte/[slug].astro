@@ -1,0 +1,174 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+    const projekte = await getCollection("projekte");
+    return projekte.map((projekt) => ({
+        params: { slug: projekt.id },
+        props: { projekt },
+    }));
+}
+
+const { projekt } = Astro.props;
+const { Content } = await render(projekt);
+---
+
+<BaseLayout title={projekt.data.title}>
+    <h1>{projekt.data.title}</h1>
+    {
+        projekt.data.tags && (
+            <ul>
+                {projekt.data.tags.map((tag) => (
+                    <li class="badge">{tag}</li>
+                ))}
+            </ul>
+        )
+    }
+    <div id="content">
+        <Content />
+    </div>
+    {
+        projekt.data.bilder && projekt.data.bilder.length > 0 && (
+            <div class="slider-wrapper">
+                {projekt.data.bilder.length > 1 && (
+                    <div class="slider-nav">
+                        <button id="prev">←</button>
+                        <span id="counter">
+                            1 / {projekt.data.bilder.length}
+                        </span>
+                        <button id="next">→</button>
+                    </div>
+                )}
+                <div class="slider" id="slider">
+                    {projekt.data.bilder.map((bild) => (
+                        <div class="slide">
+                            <img src={bild} alt={projekt.data.title} />
+                        </div>
+                    ))}
+                </div>
+            </div>
+        )
+    }
+</BaseLayout>
+
+<style>
+    .slider-wrapper {
+        margin: 0 0;
+    }
+
+    .slider {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .slider::-webkit-scrollbar {
+        display: none;
+    }
+
+    .slide {
+        flex: 0 0 100%;
+        scroll-snap-align: start;
+    }
+
+    .slide img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .slider-nav {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin-top: 1rem;
+    }
+
+    .slider-nav button {
+        background: none;
+        color: var(--anthrazit);
+        font-family: "Oswald", sans-serif;
+        font-size: 1rem;
+        padding: 0.3rem 0.8rem;
+        cursor: pointer;
+        margin-bottom: 0.5em;
+    }
+
+    .slider-nav button:hover {
+        background-color: var(--hell);
+    }
+
+    #counter {
+        font-size: 0.8rem;
+        color: var(--anthrazit-mid);
+    }
+
+    #content {
+        margin-top: 2rem;
+    }
+
+    #content :global(p) {
+        margin-bottom: 1rem;
+    }
+
+    @media (max-width: 500px) {
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 400;
+        }
+
+        #content {
+            margin-top: 0.5rem;
+            hyphens: auto;
+            text-align: justify;
+        }
+
+        .slider-nav button {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener("astro:page-load", () => {
+        console.log("page-load fired");
+        initSlider();
+    });
+
+    function initSlider() {
+        const slider = document.getElementById("slider");
+        const prev = document.getElementById("prev");
+        const next = document.getElementById("next");
+        const counter = document.getElementById("counter");
+        const total = slider?.children.length ?? 0;
+        let current = 0;
+
+        function goTo(index: number) {
+            if (!slider) throw new Error("Slider not found");
+            current = ((index % total) + total) % total;
+            slider.scrollTo({
+                left: current * slider.offsetWidth,
+                behavior: "smooth",
+            });
+            if (counter) counter.textContent = `${current + 1} / ${total}`;
+        }
+
+        prev?.addEventListener("click", () => goTo(current - 1));
+        next?.addEventListener("click", () => goTo(current + 1));
+
+        slider?.addEventListener("scroll", () => {
+            const index = Math.round(slider.scrollLeft / slider.offsetWidth);
+            if (index !== current) {
+                current = index;
+                if (counter) counter.textContent = `${current + 1} / ${total}`;
+            }
+        });
+    }
+
+    initSlider();
+    document.addEventListener("astro:page-load", initSlider);
+</script>

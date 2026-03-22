@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+:root {
+    --anthrazit: #141A1A;
+    --anthrazit-mid: #989E9E;
+    --hell: #FCF9F7;
+    --gruen: #1D9E75;
+    --gruen-hell: #A2F79C;
+    --rot: #810229;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Funnel Sans", sans-serif;
+    background-color: white;
+    color: var(--anthrazit);
+    font-weight: 600;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 500;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+h3 {
+    font-size: 1.125rem;
+    font-weight: 400;
+}
+
+p,
+td,
+li {
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+small {
+    font-size: 0.8rem;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.2rem 0.4rem;
+    border: 0.5px solid var(--rot);
+    color: var(--rot);
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.badge:first-of-type {
+    margin-right: 0.4rem;
+}
+
+.teaser {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: var(--anthrazit);
+}
+
+@media (max-width: 500px) {
+    body {
+        padding: 0 1rem;
+    }
+}
