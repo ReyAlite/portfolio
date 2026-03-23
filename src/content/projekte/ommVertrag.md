@@ -1,12 +1,13 @@
 ---
 title: "OMM VERTRAG"
 beschreibung: "Digital contract assistant that simplifies intergenerational living."
-vorschaubild: "/images/omm/cover.jpg"
+vorschaubild: "/images/omm/1.jpg"
 bilder:
-  - "/images/omm/1.jpg"
-  - "/images/omm/2.jpg"
-  - "/images/omm/3.jpg"
-  - "/images/omm/4.jpg"
+  - "/images/ommVertrag/1.jpg"
+  - "/images/ommVertrag/2.jpg"
+  - "/images/ommVertrag/3.jpg"
+  - "/images/ommVertrag/4.jpg"
+  - "/images/ommVertrag/5.jpg"
 tags: ["Service Design", "User Research"]
 datum: "2024"
 featured: true

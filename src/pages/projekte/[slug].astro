@@ -12,10 +12,15 @@ export async function getStaticPaths() {
 
 const { projekt } = Astro.props;
 const { Content } = await render(projekt);
+console.log("Projekt data:", projekt.data);
+
 ---
 
-<BaseLayout title={projekt.data.title}>
-    <h1>{projekt.data.title}</h1>
+<BaseLayout title={`Rey Alite | ${projekt.data.title}`}>
+    <div class="projekt-header">
+        <h1>{projekt.data.title}</h1>
+        <a href="/" class="back">← Projects</a>
+    </div>
     {
         projekt.data.tags && (
             <ul>
@@ -102,6 +107,28 @@ const { Content } = await render(projekt);
         background-color: var(--hell);
     }
 
+    .projekt-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .back {
+        background: none;
+        border: 0.5px solid var(--anthrazit);
+        color: var(--anthrazit);
+        font-size: 0.8rem;
+        padding: 0.2rem 0.6rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    .back:hover {
+        background-color: var(--hell);
+    }
+
     #counter {
         font-size: 0.8rem;
         color: var(--anthrazit-mid);
@@ -135,7 +162,6 @@ const { Content } = await render(projekt);
 
 <script>
     document.addEventListener("astro:page-load", () => {
-        console.log("page-load fired");
         initSlider();
     });
 
