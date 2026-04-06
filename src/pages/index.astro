@@ -9,6 +9,15 @@ const sortiert = projekte.sort((a, b) =>
 ---
 
 <BaseLayout title="Rey Alite">
+  <section class="intro" style="min-height: 100svh; display: flex; align-items: center;">
+    <div class="intro-row">
+      <p>Hallo! <br />
+        I'm an interface designer with a background in media informatics.</p>
+      <button id="scroll-btn" aria-label="Scroll to projects">↓</button>
+    </div>
+  </section>
+
+  <section class="projekte" id="projekte" style="min-height: 100svh;">
   <h1>PROJECTS</h1>
 
   <table>
@@ -33,9 +42,39 @@ const sortiert = projekte.sort((a, b) =>
       }
     </tbody>
   </table>
+  </section>
 </BaseLayout>
 
 <style>
+  .intro-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 2rem;
+  }
+
+  .intro p {
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--anthrazit);
+    line-height: 1.4;
+  }
+
+  #scroll-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--anthrazit);
+    cursor: pointer;
+    padding: 0.3rem 0.5rem;
+    flex-shrink: 0;
+  }
+
+  #scroll-btn:hover {
+    background-color: var(--hell);
+  }
+
   h1 {
     margin-bottom: 3rem;
   }
@@ -121,3 +160,14 @@ const sortiert = projekte.sort((a, b) =>
     }
   }
 </style>
+
+<script>
+  function initScrollBtn() {
+    document.getElementById("scroll-btn")?.addEventListener("click", () => {
+      document.getElementById("projekte")?.scrollIntoView({ behavior: "smooth" });
+    });
+  }
+
+  initScrollBtn();
+  document.addEventListener("astro:page-load", initScrollBtn);
+</script>

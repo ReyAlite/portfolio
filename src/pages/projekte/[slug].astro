@@ -30,6 +30,7 @@ console.log("Projekt data:", projekt.data);
             </ul>
         )
     }
+    <p class="beschreibung">{projekt.data.beschreibung}</p>
     <div id="content">
         <Content />
     </div>
@@ -131,6 +132,12 @@ console.log("Projekt data:", projekt.data);
 
     #counter {
         font-size: 0.8rem;
+        color: var(--anthrazit-mid);
+    }
+
+    .beschreibung {
+        margin-top: 0.75rem;
+        font-size: 0.85rem;
         color: var(--anthrazit-mid);
     }
 
