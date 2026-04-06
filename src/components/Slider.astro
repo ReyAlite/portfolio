@@ -1,0 +1,124 @@
+---
+interface Props {
+  images: string[];
+  alt?: string;
+}
+const { images, alt = "" } = Astro.props;
+---
+
+<div class="slider-wrapper" data-slider>
+  {images.length > 1 && (
+    <div class="slider-nav">
+      <button class="slider-btn" data-direction="prev">←</button>
+      <span class="slider-counter">1 / {images.length}</span>
+      <button class="slider-btn" data-direction="next">→</button>
+    </div>
+  )}
+  <div class="slider-track" data-track>
+    {images.map((img) => (
+      <div class="slide">
+        <img src={img} alt={alt} />
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .slider-wrapper {
+    margin: 1.5rem 0;
+  }
+
+  .slider-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .slider-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .slide {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+  }
+
+  .slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .slider-nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .slider-btn {
+    background: none;
+    border: none;
+    color: var(--anthrazit);
+    font-family: "Oswald", sans-serif;
+    font-size: 1rem;
+    padding: 0.3rem 0.8rem;
+    cursor: pointer;
+  }
+
+  .slider-btn:hover {
+    background-color: var(--hell);
+  }
+
+  .slider-counter {
+    font-size: 0.8rem;
+    color: var(--anthrazit-mid);
+  }
+
+  @media (max-width: 500px) {
+    .slider-btn {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  function initSliders() {
+    document.querySelectorAll<HTMLElement>("[data-slider]").forEach((wrapper) => {
+      if (wrapper.dataset.initialized) return;
+      wrapper.dataset.initialized = "true";
+
+      const track = wrapper.querySelector<HTMLElement>("[data-track]");
+      const counter = wrapper.querySelector<HTMLElement>(".slider-counter");
+      const prevBtn = wrapper.querySelector<HTMLButtonElement>('[data-direction="prev"]');
+      const nextBtn = wrapper.querySelector<HTMLButtonElement>('[data-direction="next"]');
+
+      if (!track) return;
+      const total = track.children.length;
+      let current = 0;
+
+      function goTo(index: number) {
+        current = ((index % total) + total) % total;
+        track!.scrollTo({ left: current * track!.offsetWidth, behavior: "smooth" });
+        if (counter) counter.textContent = `${current + 1} / ${total}`;
+      }
+
+      prevBtn?.addEventListener("click", () => goTo(current - 1));
+      nextBtn?.addEventListener("click", () => goTo(current + 1));
+
+      track.addEventListener("scroll", () => {
+        const index = Math.round(track.scrollLeft / track.offsetWidth);
+        if (index !== current) {
+          current = index;
+          if (counter) counter.textContent = `${current + 1} / ${total}`;
+        }
+      });
+    });
+  }
+
+  initSliders();
+  document.addEventListener("astro:page-load", initSliders);
+</script>
